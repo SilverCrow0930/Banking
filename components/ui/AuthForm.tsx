@@ -21,10 +21,13 @@ import { Input } from "@/components/ui/input"
 import CustomInput from '../CustomInput';
 import { authFormSchema } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user.action';
 
 const AuthForm = ({ type }: {type: string }) => {
-    const [user, setUser] = useState(null)
-    const [isLoading, setisLoading] = useState(false)
+    const router = useRouter();
+    const [user, setUser] = useState(null);
+    const [isLoading, setisLoading] = useState(false);
 
     const formSchema = authFormSchema(type);
 
@@ -37,13 +40,32 @@ const AuthForm = ({ type }: {type: string }) => {
         },
     })
     
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        setisLoading(true)
-        console.log(values)
-        setisLoading(false)
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
+        setisLoading(true);
+
+        try{
+            if(type === 'sign-up') {
+               const newUser = await signUp(data);
+
+               setUser(newUser);
+            }
+
+            if (type === 'sign-in'){
+               const response = await signIn({
+                   email: data.email,
+                   password: data.password,
+               })
+
+               if(response) router.push('/')
+            }
+
+        console.log(data);
+        setisLoading(false);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setisLoading(false);
+        }
     }
 
   return (
@@ -61,8 +83,8 @@ const AuthForm = ({ type }: {type: string }) => {
 
             <div className='flex flex-col gap-1 md:gap-3'>
                 <h1 className='text-24 lg:text-36 font-semibold text-gray-900'>
-                    {user? 
-                        'Link Account'
+                    {user
+                        ? 'Link Account'
                         : type === 'sign-in' 
                             ? 'Sign In'
                             : 'Sign Up'
@@ -102,6 +124,10 @@ const AuthForm = ({ type }: {type: string }) => {
                                 <CustomInput control= {form.control} 
                                 name='address1' label="Address" 
                                 placeholder="Enter your address"/>
+
+                                <CustomInput control= {form.control} 
+                                name='city' label="City" 
+                                placeholder="Enter your city"/>
 
                                 <div className='flex gap-4'>
                                     <CustomInput control= {form.control} 
