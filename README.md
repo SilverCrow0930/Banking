@@ -1,4 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Horizon is a modern bank built for the way you live and work.
+
+We understand that everyone's financial journey is unique. That's why we created Horizon – a banking platform that's easy to use, secure, and packed with features to help you achieve your goals.
+
+Whether you're saving for a down payment, growing your business, or simply looking for a better way to manage your money, Horizon has you covered.
+
+With Horizon, you can:
+
+Effortlessly manage your accounts: View balances, track transactions, and pay bills all in one place.
+Save smarter: Set savings goals, automate transfers, and watch your money grow.
+Invest confidently: Explore various investment options and make informed decisions.
+Run your business smoothly: Receive payments, manage expenses, and access valuable business insights.
+
+Banking should be simple, transparent, and personalized. That's the Horizon difference.
 
 ## Getting Started
 
